@@ -56,7 +56,12 @@ initialize = do
   existsConf <- pitConfigFile >>= doesFileExist
   unless existsConf writeDefaultConfig
 
-get :: (Y.FromJSON a) => Text -> IO (Maybe a)
+-- | Gets the data by a key.
+-- If current profile is set to 'dev', this function tries to
+-- get the data from '~/.pit/dev.yaml'.
+get :: (Y.FromJSON a)
+       => Text -- ^ a key
+       -> IO (Maybe a)
 get name = do
   initialize
   prof <- getProfile
@@ -67,7 +72,11 @@ get name = do
      Nothing -> return Nothing
      Just v -> return $ Y.parseMaybe Y.parseJSON v
 
-set :: (Y.ToJSON a) => Text -> a -> IO ()
+-- | Sets new data.
+set :: (Y.ToJSON a)
+       => Text -- ^ a key
+       -> a -- ^ new data
+       -> IO ()
 set name value = do
   initialize
   prof <- getProfile
@@ -76,7 +85,11 @@ set name value = do
   file <- pitProfileFile $ T.unpack prof
   Y.encodeFile file newConf
 
-switch :: Text -> IO ()
+-- | Switches the profile.
+-- The current profile is stored in '~/.pit/pit.yaml'.
+-- This function rewrites it.
+switch :: Text -- ^ new profile
+          -> IO ()
 switch newProf = do
   let newConf = Y.object ["profile" Y..= Y.String newProf]
   file <- pitConfigFile
