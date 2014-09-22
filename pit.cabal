@@ -1,17 +1,29 @@
 name:                pit
-version:             0.1.0.0
+version:             0.2.0
 synopsis:            Account management tool.
-license:             GPL-2
+license:             MIT
 license-file:        LICENSE
-author:              chiro
-maintainer:          peanut2626@gmail.com
+author:              Yuichiro Hanada
+maintainer:          Yuichiro Hanada <i@chir.jp>
+stability:           Experimental
 build-type:          Simple
 extra-source-files:  README.md
 cabal-version:       >=1.10
+homepage:            https://github.com/chiro/haskell-pit
+
+description:
+  This package provides the account management tool and the library for
+  account management.
+  .
+  This package is a porting of Pit (see <https://github.com/cho45/pit>).
+
+source-repository head
+  type: git
+  location: git://github.com/chiro/haskell-pit.git
 
 library
   exposed-modules: Pit
-  -- other-modules:       
+
   build-depends:       base >=4.7 && <4.8
                        , directory
                        , filepath
