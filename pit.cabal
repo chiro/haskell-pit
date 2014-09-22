@@ -29,7 +29,12 @@ executable pit
   main-is: Main.hs
   build-depends: base >= 4.7 && < 4.8
                  , pit
+                 , bytestring
+                 , optparse-applicative
+                 , process
+                 , temporary
                  , text
                  , unordered-containers
+                 , yaml
 
   ghc-options: -Wall
