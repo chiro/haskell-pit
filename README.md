@@ -1,5 +1,6 @@
 haskell-pit
 ===========
+[![Build Status](https://travis-ci.org/chiro/haskell-pit.svg?branch=master)](https://travis-ci.org/chiro/haskell-pit)
 
 ## About
 This is an account management tool and library for haskell,
