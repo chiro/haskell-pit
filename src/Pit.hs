@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE CPP #-}
 
 module Pit (
   get,
@@ -13,6 +14,9 @@ import Control.Monad (unless, when)
 
 import qualified Data.ByteString.Char8 as C
 import Data.HashMap.Strict (HashMap())
+#if !MIN_VERSION_base(4, 6, 0)
+import qualified Data.List as L
+#endif
 import qualified Data.HashMap.Strict as H
 import Data.Maybe (fromJust, fromMaybe, isJust)
 import Data.Text (Text())
@@ -64,7 +68,12 @@ initialize = do
 
 openEditorAndGetValue :: Maybe Y.Value -> IO (Maybe Y.Value)
 openEditorAndGetValue def = do
+#if MIN_VERSION_base(4, 6, 0)
   editor' <- lookupEnv "EDITOR"
+#else
+  env <- getEnvironment
+  let editor' = L.lookup "EDITOR" env
+#endif
   isTty <- hIsTerminalDevice stdout
   if isJust editor' && isTty
     then withSystemTempFile "new.yaml" $ \path h -> do
